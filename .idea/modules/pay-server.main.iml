@@ -6,7 +6,7 @@
       <configuration />
     </facet>
   </component>
-  <component name="NewModuleRootManager">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
     <output url="file://$MODULE_DIR$/../../pay-server/build/classes/java/main" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../pay-server/build/generated/sources/annotationProcessor/java/main">
