@@ -1,0 +1,21 @@
+
+---
+
+spring:
+  profiles:
+    active: local
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: pay_manager
+
+---
+
+spring:
+  profiles: prod
+  data:
+    mongodb:
+      host: pay-mongodb
+      port: 27017
+      database: pay_manager
