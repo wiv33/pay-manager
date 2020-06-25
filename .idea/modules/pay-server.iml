@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="org.psawesome" externalSystemModuleVersion="0.0.1-SNAPSHOT" linkedProjectId="pay-server" linkedProjectPath="$MODULE_DIR$/../../pay-server" rootProjectPath="$MODULE_DIR$/../../pay-server" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../pay-server">
+      <excludeFolder url="file://$MODULE_DIR$/../../pay-server/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../pay-server/build" />
+    </content>
+    <orderEntry type="jdk" jdkName="ZULU_11" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
