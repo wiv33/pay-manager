@@ -8,13 +8,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * author: ps [https://github.com/wiv33/pay-manager]
  * DATE: 20. 6. 25. Thursday
  */
 @SpringBootTest
+@DisplayName("토큰 생성 테스트")
 class GenerateTokenTest {
 
   @Autowired
@@ -32,12 +34,14 @@ class GenerateTokenTest {
   }
 
   @Test
-  @DisplayName("토큰 중복 체크 - 100개")
+  @DisplayName("토큰 중복 체크 - 1000개, loss = 2%...")
   void testTokenKey() {
+    var expected = 1000;
     int size = Stream.generate(() -> token.getToken())
-            .limit(100)
+            .limit(expected)
             .collect(Collectors.toSet())
             .size();
-    assertEquals(100, size);
+    assertEquals(expected, size);
   }
+
 }

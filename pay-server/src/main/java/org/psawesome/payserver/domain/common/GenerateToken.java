@@ -23,14 +23,15 @@ public class GenerateToken {
             )
                     .parallel()
                     .mapToObj(Character::toString)
-                    .limit(2)
+//                    .peek(System.out::println)
                     .collect(Collectors.toList()))
             ;
   }
 
   private String makeResult(List<String> strings) {
     strings.add(String.valueOf(ThreadLocalRandom.current().nextInt(0, 9)));
-    return strings.parallelStream()
+    return strings
+            .parallelStream()
             .limit(3)
             .reduce((acc, str) -> acc + str)
             .get();
