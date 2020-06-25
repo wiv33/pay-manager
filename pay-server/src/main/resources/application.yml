@@ -9,18 +9,26 @@ spring:
 spring:
   profiles:
     active: local
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: pay_manager
+  r2dbc:
+    url: postgresql://localhost/PAY_DB
+    username: postgres
+    password: secret
+  jpa:
+    show-sql: true
+    generate-ddl: true
 
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          r2dbc=DEBUG: debug
 ---
 
 spring:
   profiles: prod
-  data:
-    mongodb:
-      host: pay-mongodb
-      port: 27017
-      database: pay_manager
+
+  r2dbc:
+    url: postgresql://localhost/PAY_DB
+    username: postgres
+    password: secret

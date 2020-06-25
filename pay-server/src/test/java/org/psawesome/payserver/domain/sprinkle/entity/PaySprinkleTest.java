@@ -6,17 +6,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.psawesome.payserver.domain.common.PayAssociation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.ReactiveMongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.CriteriaDefinition;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,18 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 class PaySprinkleTest {
 
-  @Autowired
-  ReactiveMongoOperations operations;
-
   @Test
   void testSprinkleEntityState() {
 
-    PaySprinkle paySprinkle = getTypePaySprinkle_1000().limit(1)
-            .findFirst().get();
-
-    operations.save(paySprinkle)
-            .log("paySprinkle log -->> ")
-            .subscribe(System.out::println);
   }
 
   @ParameterizedTest
@@ -66,7 +50,7 @@ class PaySprinkleTest {
 
   private static Stream<PaySprinkle> getTypePaySprinkle_1000() {
     return Stream.generate(() -> PaySprinkle.builder()
-            .room(new PayAssociation<>(UUID.randomUUID()))
+            .room(new PayAssociation<>(1L))
             .sprinkleDate(LocalDateTime.now())
             .sprinklePay(BigDecimal.valueOf(500))
             .sprinkleDivide(3)

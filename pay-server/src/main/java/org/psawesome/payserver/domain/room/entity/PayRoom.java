@@ -7,11 +7,11 @@ import org.psawesome.payserver.domain.common.PayAssociation;
 import org.psawesome.payserver.domain.sprinkle.entity.PaySprinkle;
 import org.psawesome.payserver.domain.user.entity.PayUser;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * author: ps [https://github.com/wiv33/pay-manager]
@@ -19,18 +19,18 @@ import java.util.UUID;
  */
 
 @Data
-@Document("PAY_ROOM")
+@Table("PAY_ROOM")
 public class PayRoom {
 
   @Id
-  private final UUID uuid;
+  @Column("ID")
+  private Long id;
 
   private List<PayAssociation<PaySprinkle>> paySprinkles;
   private List<PayAssociation<PayUser>> payUsers;
 
   @Builder(access = AccessLevel.PUBLIC)
   public PayRoom(List<PayAssociation<PaySprinkle>> paySprinkles, List<PayAssociation<PayUser>> payUsers) {
-    this.uuid = UUID.randomUUID();
     this.paySprinkles = paySprinkles;
     this.payUsers = payUsers;
   }
@@ -38,7 +38,7 @@ public class PayRoom {
   @Override
   public String toString() {
     return "PayRoom{" +
-            "uuid=" + uuid +
+            "id=" + id +
             ", paySprinkles=" + this.payArrToString(this.paySprinkles) +
             ", payUsers=" + this.payArrToString(this.payUsers) +
             '}';

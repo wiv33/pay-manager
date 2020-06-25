@@ -1,18 +1,13 @@
 package org.psawesome.payserver.domain.sprinkle.entity;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.psawesome.payserver.domain.common.PayAssociation;
 import org.psawesome.payserver.domain.room.entity.PayRoom;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -22,12 +17,9 @@ import java.util.stream.IntStream;
  * DATE: 20. 6. 25. Thursday
  */
 @Data
-@Document("PAY_SPRINKLE")
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class PaySprinkle {
 
-  @Id
-  private UUID uuid;
+  private Long id;
 
   private PayAssociation<PayRoom> room;
 
@@ -43,7 +35,6 @@ public class PaySprinkle {
 
   @Builder
   public PaySprinkle(PayAssociation<PayRoom> room, BigDecimal sprinklePay, int sprinkleDivide, LocalDateTime sprinkleDate, LocalDateTime completeDate, boolean isCompletePay) {
-    this.uuid = UUID.randomUUID();
     this.room = room;
     this.token = makeToken();
     this.sprinklePay = sprinklePay;

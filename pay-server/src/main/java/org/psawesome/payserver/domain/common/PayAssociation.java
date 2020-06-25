@@ -3,8 +3,6 @@ package org.psawesome.payserver.domain.common;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * author: ps [https://github.com/wiv33/pay-manager]
@@ -12,9 +10,9 @@ import java.util.stream.Collectors;
  */
 public class PayAssociation<T> {
 
-  private final List<UUID> uuidList;
+  private final List<Long> uuidList;
 
-  public PayAssociation(UUID uuid) {
+  public PayAssociation(Long uuid) {
     this.uuidList = new ArrayList<>();
     this.uuidList.add(uuid);
   }
@@ -23,12 +21,12 @@ public class PayAssociation<T> {
     return Objects.isNull(this.uuidList) ?
             null : this.uuidList
             .stream()
-            .map(UUID::toString)
+            .map(String::valueOf)
             .reduce((acc, uuid) -> acc  + ","+ uuid)
             .orElse(null);
   }
 
-  public PayAssociation<T> setUuidList(UUID targetUuid){
+  public PayAssociation<T> setUuidList(Long targetUuid){
     this.uuidList.add(targetUuid);
     return this;
   }
