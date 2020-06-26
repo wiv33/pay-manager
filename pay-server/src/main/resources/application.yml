@@ -1,8 +1,8 @@
-spring:
-  rsocket:
-    server:
-      port: 7000
-      transport: tcp
+#spring:
+#  rsocket:
+#    server:
+#      port: 7000
+#      transport: tcp
 
 ---
 
@@ -10,7 +10,7 @@ spring:
   profiles:
     active: local
   r2dbc:
-    url: postgresql://localhost/PAY_DB
+    url: postgresql://localhost/postgres
     username: postgres
     password: secret
   jpa:
@@ -29,6 +29,8 @@ spring:
   profiles: prod
 
   r2dbc:
-    url: postgresql://localhost/PAY_DB
+    url: postgresql://pay_postgres/postgres
     username: postgres
     password: secret
+    name: postgres
+

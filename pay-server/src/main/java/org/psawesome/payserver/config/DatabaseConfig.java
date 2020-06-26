@@ -1,6 +1,7 @@
 package org.psawesome.payserver.config;
 
-import io.r2dbc.spi.ConnectionFactories;
+import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
+import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +28,14 @@ public class DatabaseConfig extends AbstractR2dbcConfiguration {
   @Override
   @Bean("connectionFactory")
   public ConnectionFactory connectionFactory() {
-    ConnectionFactory factory = ConnectionFactories.get("r2dbc:h2:mem:///testdb?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+//    ConnectionFactory factory = ConnectionFactories.get("r2dbc:h2:mem:///testdb?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+    PostgresqlConnectionFactory factory = new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder()
+            .host("localhost")
+            .database("postgres")
+            .username("postgres")
+            .password("secret")
+            .build()
+    );
 /*
     ConnectionFactoryOptions conn = ConnectionFactoryOptions.builder()
             .option(ConnectionFactoryOptions.HOST, "localhost")

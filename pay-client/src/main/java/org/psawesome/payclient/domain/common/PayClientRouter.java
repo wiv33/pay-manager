@@ -1,9 +1,9 @@
-package org.psawesome.payclient.domain.router;
+package org.psawesome.payclient.domain.common;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.psawesome.payclient.domain.receive.handler.ReceiveHandler;
-import org.psawesome.payclient.domain.room.handler.RoomHandler;
+import org.psawesome.payclient.domain.sprinkle.SprinkleHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,6 +14,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.nest;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
+//import org.psawesome.payclient.domain.room.handler.RoomHandler;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -21,7 +23,9 @@ public class PayClientRouter {
 
   private final ReceiveHandler receiveHandler;
 
-  private final RoomHandler payRoomHandler;
+  private final SprinkleHandler sprinkleHandler;
+
+//  private final RoomHandler payRoomHandler;
 
   @Bean
   RouterFunction<?> routerFunction() {
@@ -30,12 +34,16 @@ public class PayClientRouter {
                     route(GET("/{id}"), receiveHandler::takePay)
 //                    .route(POST("/{id}"), receiveHandler::)
             ))
-            .andNest(path("/room"),
+            .andNest(path("/sprinkle"),
+                    nest(accept(MediaType.APPLICATION_JSON),
+                            route(POST("/"), sprinkleHandler::sprinklePay)))
+            /*.andNest(path("/room"),
                     nest(accept(MediaType.APPLICATION_JSON),
                             route(GET("/{roomId}/{userId}"), payRoomHandler::joinRoom)
 //                                    .and()
                     )
-            );
+            )*/
+            ;
   }
 
   @Bean
@@ -46,6 +54,7 @@ public class PayClientRouter {
               .forEach((k, v) -> log.info("attributes key = {}, val = {}", k, v));
       request.headers()
               .forEach((k, v) -> log.info("header key = {}, v = {}", k, v));
+
       return next.exchange(request);
     });
   }

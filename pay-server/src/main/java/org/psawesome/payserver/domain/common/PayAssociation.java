@@ -8,13 +8,14 @@ import java.util.Objects;
  * author: ps [https://github.com/wiv33/pay-manager]
  * DATE: 20. 6. 25. Thursday
  */
+@Deprecated
 public class PayAssociation<T> {
 
   private final List<Long> uuidList;
 
-  public PayAssociation(Long uuid) {
+  public PayAssociation(Long id) {
     this.uuidList = new ArrayList<>();
-    this.uuidList.add(uuid);
+    this.uuidList.add(id);
   }
 
   public String getUuids() {

@@ -1,3 +1,4 @@
+/*
 package org.psawesome.payserver.domain.room.entity;
 
 import org.junit.jupiter.api.Test;
@@ -9,10 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
+*/
 /**
  * author: ps [https://github.com/wiv33/pay-manager]
  * DATE: 20. 6. 25. Thursday
- */
+ *//*
+
 
 @SpringBootTest
 class PayRoomTest {
@@ -32,3 +35,4 @@ class PayRoomTest {
 
   }
 }
+*/

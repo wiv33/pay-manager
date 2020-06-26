@@ -1,4 +1,4 @@
-package org.psawesome.payclient.domain.router;
+package org.psawesome.payclient.domain.common;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.psawesome.payclient.domain.receive.handler.ReceiveHandler;
 import org.psawesome.payclient.domain.room.dto.req.JoinRequest;
 import org.psawesome.payclient.domain.room.dto.res.JoinResponse;
-import org.psawesome.payclient.domain.room.handler.RoomHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.http.HttpStatus;
@@ -22,10 +21,15 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//import org.psawesome.payclient.config.RSocketRequesterConfig;
+//import org.psawesome.payclient.domain.room.handler.RoomHandler;
+
 @WebFluxTest(controllers = {
+//        RSocketRequesterConfig.class,
         PayClientRouter.class,
         ReceiveHandler.class,
-        RoomHandler.class}
+//        RoomHandler.class
+}
 )
 class PayClientRouterTest {
 
@@ -40,9 +44,7 @@ class PayClientRouterTest {
 
 
   @BeforeEach
-  void setUp(@Autowired final PayClientRouter payClientRouter,
-             @Autowired final ReceiveHandler receiveHandler,
-             @Autowired final RoomHandler payRoomHandler) {
+  void setUp() {
 //    testClient = WebTestClient.bindToRouterFunction(payClientRouter.routerFunction())
 //            .build();
 
@@ -73,7 +75,6 @@ class PayClientRouterTest {
 //                      assertTrue(false); // is success?
                     }
             ));
-    ;
 
   }
 

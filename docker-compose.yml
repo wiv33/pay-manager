@@ -1,5 +1,13 @@
+
 version: '3.7'
 
 services:
   pay_postgres:
-    image:
+    image: postgres
+    restart: always
+    container_name: pay_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - 5432:5432
