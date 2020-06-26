@@ -58,6 +58,7 @@ public class DatabaseConfig extends AbstractR2dbcConfiguration {
     return new R2dbcTransactionManager(connectionFactory);
   }
 
+/*
   @Bean
   public ConnectionFactoryInitializer initializer(@Qualifier("connectionFactory") ConnectionFactory connectionFactory) {
     ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
@@ -68,5 +69,7 @@ public class DatabaseConfig extends AbstractR2dbcConfiguration {
     initializer.setDatabasePopulator(populator);
     return initializer;
   }
+*/
+
 }
 

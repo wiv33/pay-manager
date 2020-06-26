@@ -15,17 +15,13 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @Table("PAY_USER")
+@Builder
 public class PayUser {
 
   @Id
-  @Column("ID")
   private Integer id;
 
-  @Column("NAME")
-  private String name;
+  @Column("USER_NAME")
+  private String userName;
 
-  @Builder
-  public PayUser(String name) {
-    this.name = name;
-  }
 }

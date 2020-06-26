@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import reactor.test.StepVerifier;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * author: ps [https://github.com/wiv33/pay-manager]
  * DATE: 20. 6. 26. Friday
@@ -18,12 +21,26 @@ class PayUserTest {
 
   @Test
   void testSaveUser() {
-    StepVerifier.create(repository.save(PayUser.builder().name("ps").build())
-            .log())
-            .expectNextCount(1L)
-            .expectNext(new PayUser(1, "ps"))
+    PayUser maria = PayUser.builder()
+            .userName("maria")
+            .build();
+    StepVerifier.create(repository.save(maria)
+            .log()
+    )
+            .expectNext(new PayUser(2, "maria"))
             .expectComplete()
             .verify()
+    ;
+  }
+
+  @Test
+  void testFindByUser() {
+    StepVerifier.create(this.repository.findById(1).log())
+            .consumeNextWith(payUsers -> assertAll(
+                    () -> assertEquals(1, payUsers.getId()),
+                    () -> assertEquals("ps", payUsers.getUserName())
+            ))
+            .verifyComplete()
     ;
   }
 }

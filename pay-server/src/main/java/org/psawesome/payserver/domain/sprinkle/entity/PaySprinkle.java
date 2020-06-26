@@ -15,7 +15,6 @@ import org.springframework.data.relational.core.mapping.Table;
 public class PaySprinkle {
 
   @Id
-  @Column("ID")
   private Integer id;
 
   @Column("TOKEN_ID")

@@ -1,7 +1,7 @@
 package org.psawesome.payserver.domain.user.repo;
 
 import org.psawesome.payserver.domain.user.entity.PayUser;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * DATE: 20. 6. 26. Friday
  */
 @Repository
-public interface PayUserRepository extends ReactiveCrudRepository<PayUser, Integer> {
+public interface PayUserRepository extends R2dbcRepository<PayUser, Integer> {
 
 }

@@ -20,7 +20,6 @@ import java.util.stream.IntStream;
 public class PayToken {
 
   @Id
-  @Column("ID")
   private Integer id;
 
   @Column("TOKEN")

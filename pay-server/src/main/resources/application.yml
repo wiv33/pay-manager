@@ -3,6 +3,8 @@
 #    server:
 #      port: 7000
 #      transport: tcp
+server:
+  port: 8080
 
 ---
 
@@ -23,6 +25,7 @@ logging:
       springframework:
         data:
           r2dbc=DEBUG: debug
+
 ---
 
 spring:
