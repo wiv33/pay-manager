@@ -21,7 +21,7 @@ class PayUserTest {
     StepVerifier.create(repository.save(PayUser.builder().name("ps").build())
             .log())
             .expectNextCount(1L)
-            .expectNext(new PayUser(1L, "ps"))
+            .expectNext(new PayUser(1, "ps"))
             .expectComplete()
             .verify()
     ;

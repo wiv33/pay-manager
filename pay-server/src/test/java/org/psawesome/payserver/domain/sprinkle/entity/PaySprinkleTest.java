@@ -28,33 +28,4 @@ class PaySprinkleTest {
 
   }
 
-  @ParameterizedTest
-  @MethodSource({"getTypePaySprinkle_1000"})
-  @DisplayName("토큰 세 자리 테스트")
-  void testTokenLength(PaySprinkle paySprinkle) {
-    assertEquals(3, paySprinkle.getToken().length());
-  }
-
-  @ParameterizedTest
-//  @MethodSource("getTypePaySprinkle_1000")
-  @ValueSource(ints = {1000})
-  @DisplayName("토큰 중복 체크 - 1000개, loss = 2%...")
-  void testTokenKey(int expected) {
-    int size = getTypePaySprinkle_1000()
-            .map(PaySprinkle::getToken)
-            .limit(expected)
-            .collect(Collectors.toSet())
-            .size();
-    assertTrue(expected * 0.02 < size);
-  }
-
-  private static Stream<PaySprinkle> getTypePaySprinkle_1000() {
-    return Stream.generate(() -> PaySprinkle.builder()
-            .room(new PayAssociation<>(1L))
-            .sprinkleDate(LocalDateTime.now())
-            .sprinklePay(BigDecimal.valueOf(500))
-            .sprinkleDivide(3)
-            .build())
-            .limit(1000);
-  }
 }

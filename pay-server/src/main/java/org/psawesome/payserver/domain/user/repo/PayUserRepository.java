@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * DATE: 20. 6. 26. Friday
  */
 @Repository
-public interface PayUserRepository extends ReactiveCrudRepository<PayUser, Long> {
+public interface PayUserRepository extends ReactiveCrudRepository<PayUser, Integer> {
 
 }
