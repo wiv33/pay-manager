@@ -4,15 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.internal.stubbing.defaultanswers.GloballyConfiguredAnswer;
-import org.psawesome.payserver.domain.sprinkle.entity.PaySprinkle;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * author: ps [https://github.com/wiv33/pay-manager]
@@ -43,8 +40,6 @@ class PayTokenTest {
 
   private static Stream<PayToken> getTypePaySprinkle_1000() {
     return Stream.generate(() -> PayToken.builder()
-            .generateDate(LocalDateTime.now().toString())
-            .expireDate(LocalDateTime.now().plusMinutes(10).toString())
             .build())
             .limit(1000);
   }

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -28,8 +29,8 @@ public class PayToken {
   @Column("USE_YN")
   private String useYn;
 
-  @Column("SPRINKLE_ID")
-  private Integer sprinkleId;
+//  @Column("SPRINKLE_ID")
+//  private Integer sprinkleId;
 
   @Column("GENERATE_DATE")
   private String generateDate;
@@ -38,12 +39,12 @@ public class PayToken {
   private String expireDate;
 
   @Builder
-  public PayToken(String useYn, Integer sprinkleId, String generateDate, String expireDate) {
+  public PayToken(String useYn) {
     this.token = this.makeToken();
     this.useYn = useYn;
-    this.sprinkleId = sprinkleId;
-    this.generateDate = generateDate;
-    this.expireDate = expireDate;
+    LocalDateTime now = LocalDateTime.now();
+    this.generateDate = now.toString();
+    this.expireDate = now.plusMinutes(10).toString();
   }
 
   public String makeToken() {

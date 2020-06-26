@@ -19,36 +19,4 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 class PaySprinkleTest {
 
-  @Autowired
-  PayTokenRepository tokenRepository;
-
-  @Autowired
-  SprinkleRepository sprinkleRepository;
-
-  WebTestClient testClient;
-
-  @Test
-  void testInit() {
-    assertNotNull(tokenRepository);
-    assertNotNull(sprinkleRepository);
-
-    testClient = WebTestClient
-            .bindToServer()
-//            .defaultHeader("X-USER-ID", "1")
-//            .defaultHeader("X-ROOM-ID", "flux")
-            .baseUrl("http://localhost:8080/sprinkle")
-            .build();
-  }
-
-  @Test
-  void testSprinkleCreate() {
-    testClient.get()
-            .uri("/{price}/{divide}")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectHeader().exists("X-USER-ID")
-            .expectHeader().exists("X-ROOM-ID")
-            .expectBody()
-  }
-
 }
