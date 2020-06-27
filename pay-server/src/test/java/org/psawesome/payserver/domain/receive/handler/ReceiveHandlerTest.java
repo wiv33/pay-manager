@@ -41,10 +41,8 @@ class ReceiveHandlerTest extends PayCommonTest {
             .exchange()
             .expectBody(TokenNode.class)
             .consumeWith(tokenNodeEntityExchangeResult -> {
-              System.out.println("tokenNodeEntityExchangeResult.getResponseBody().toString() = " + tokenNodeEntityExchangeResult.getResponseBody().toString());
+              System.out.println(tokenNodeEntityExchangeResult.getStatus().toString());
             })
-
-
     ;
   }
 }

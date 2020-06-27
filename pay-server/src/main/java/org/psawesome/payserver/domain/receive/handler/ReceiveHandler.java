@@ -35,7 +35,10 @@ public class ReceiveHandler {
                             .build()
                     )
                     .retrieve()
-                    .bodyToMono(TokenNode.class),
-            TokenNode.class);
+                    .bodyToMono(TokenNode.class)
+            .doOnError(throwable -> ServerResponse.notFound()),
+            TokenNode.class)
+            .doOnError(throwable -> ServerResponse.notFound())
+            ;
   }
 }

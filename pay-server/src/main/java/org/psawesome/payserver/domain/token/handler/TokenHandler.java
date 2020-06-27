@@ -89,8 +89,10 @@ public class TokenHandler {
     return ok().body(request.bodyToMono(NodeOneRequest.class)
                     .map(nodeReq -> this.tokenNodeRepository.findOneByParentTokenAndReceiveIdIsNull(nodeReq.getToken()))
                     .single()
+//                    .checkpoint("has Elements Point")
                     .flatMap(Mono::from)
-//                    .flatMapIterable(Flux::toIterable)
+            .doOnSuccess(ele -> { if (Objects.isNull(ele)) throw new RuntimeException("유효한 토큰이 없습니다."); })
+//                    .flatMapIterable(Flux::toIterable) // block
 //                    .limitRate(1)
             .log()
                     .map(tokenNode -> {
@@ -103,7 +105,7 @@ public class TokenHandler {
             .flatMap(Mono::just)
             .log(),
             TokenNode.class)
-            .log()
-            .doOnError((throwable) -> ServerResponse.badRequest());
+            .doOnError((throwable) -> ServerResponse.badRequest())
+            ;
   }
 }
