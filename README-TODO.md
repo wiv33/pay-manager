@@ -16,6 +16,10 @@ spec 내용
 * PayToken   
     * TokenNode  
 
+schema.sql
+-
+[경로](https://github.com/wiv33/pay-manager/blob/master/pay-server/src/main/resources/schema.sql)
+
 ---
 PayRouterFunction
 -
