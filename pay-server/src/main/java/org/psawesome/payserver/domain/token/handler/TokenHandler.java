@@ -102,22 +102,25 @@ public class TokenHandler {
   private Mono<PayToken> getBody(ServerRequest request) {
     return payTokenRepository.save(PayToken.builder().build())
             .map(payToken -> {
-              generateNodeList(request, payToken);
+              saveList(request, payToken);
               return payToken;
             });
   }
 
-  private void generateNodeList(ServerRequest request, PayToken payToken) {
-    List<TokenNode> saveList = IntStream.range(0, parseNumber(request.pathVariable("divide"), Integer.class))
+  private void saveList(ServerRequest request, PayToken payToken) {
+    tokenNodeRepository.saveAll(generateListByDivide(request.pathVariable("divide"), payToken))
+            .log()
+            .subscribe();
+  }
+
+  private List<TokenNode> generateListByDivide(String limit, PayToken payToken) {
+    return IntStream.range(0, parseNumber(limit, Integer.class))
             .mapToObj(value -> TokenNode.builder()
                     .parentToken(payToken.getToken())
                     .build()
-            ).collect(Collectors.toList());
-//    log.info("saveList size = {}", saveList.size());
-//    saveList.forEach(System.out::println);
-    tokenNodeRepository.saveAll(saveList)
-            .log()
-            .subscribe();
+            )
+//            .peek(System.out::println)
+            .collect(Collectors.toList());
   }
 
   public Mono<ServerResponse> retrieveAll(ServerRequest request) {
