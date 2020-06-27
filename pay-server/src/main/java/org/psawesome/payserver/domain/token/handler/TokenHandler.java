@@ -38,8 +38,7 @@ public class TokenHandler {
 
   @Description("")
   public Mono<ServerResponse> generateToken(ServerRequest request) {
-    return ok().body(
-            getBody(request),
+    return ok().body(getBody(request),
             PayToken.class)
             .doOnError(throwable -> ServerResponse.notFound())
             .log();
@@ -108,12 +107,12 @@ public class TokenHandler {
   }
 
   private void saveList(ServerRequest request, PayToken payToken) {
-    tokenNodeRepository.saveAll(generateListByDivide(request.pathVariable("divide"), payToken))
+    tokenNodeRepository.saveAll(generateListLimitDivide(request.pathVariable("divide"), payToken))
             .log()
             .subscribe();
   }
 
-  private List<TokenNode> generateListByDivide(String limit, PayToken payToken) {
+  private List<TokenNode> generateListLimitDivide(String limit, PayToken payToken) {
     return IntStream.range(0, parseNumber(limit, Integer.class))
             .mapToObj(value -> TokenNode.builder()
                     .parentToken(payToken.getToken())
