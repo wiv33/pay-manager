@@ -6,6 +6,7 @@ spec 내용
 로직 구현된 모듈
 -
 - pay-manager:**pay-server**
+    - [모듈 경로](https://github.com/wiv33/pay-manager/tree/master/pay-server)
  
 도메인    
 -
