@@ -1,7 +1,9 @@
 package org.psawesome.payserver.domain.token.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -17,6 +19,8 @@ import java.util.stream.IntStream;
  * DATE: 20. 6. 26. Friday
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("PAY_TOKEN")
 public class PayToken {
 
@@ -69,6 +73,7 @@ public class PayToken {
                     .collect(Collectors.toList())
     )
     ;
+    // TODO PayToken.findAll().count() > 1 ? makeToken() : currentToken
     return strings
             .parallelStream()
             .limit(3)

@@ -9,9 +9,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.server.RouterFunction;
 
+import java.util.Collections;
+
+import static org.psawesome.payserver.domain.common.PayUtils.X_ROOM_ID;
+import static org.psawesome.payserver.domain.common.PayUtils.X_USER_ID;
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.nest;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
@@ -45,6 +51,7 @@ public class PayRouterFunction {
             .andNest(path("/token"),
                     nest(accept(MediaType.APPLICATION_JSON),
                             route(GET("/{divide}"), tokenHandler::getToken)
+                            .andRoute(GET("/node/{tokenId}"), tokenHandler::getNodes)
                     )
             )
             ;
@@ -59,12 +66,7 @@ public class PayRouterFunction {
 
       HttpHeaders headers = request.headers();
       headers.forEach((k, v) -> log.info("header key = {}, v = {}", k, v));
-      if (!headers.containsKey("X-USER-ID")) {
-        headers.add("X-USER-ID", "1");
-      }
-      if (!headers.containsKey("X-ROOM-ID")) {
-        headers.add("X-ROOM-ID", "flux");
-      }
+
       return next.exchange(request);
     });
   }

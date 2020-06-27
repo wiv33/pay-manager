@@ -1,7 +1,9 @@
 package org.psawesome.payserver.domain.sprinkle.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -11,6 +13,8 @@ import org.springframework.data.relational.core.mapping.Table;
  * DATE: 20. 6. 25. Thursday
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("PAY_SPRINKLE")
 public class PaySprinkle {
 

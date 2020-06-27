@@ -4,6 +4,7 @@ import org.psawesome.payserver.domain.token.entity.TokenNode;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 
 /**
  * author: ps [https://github.com/wiv33/pay-manager]
@@ -11,5 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TokenNodeRepository extends R2dbcRepository<TokenNode, Integer> {
-
+  public Flux<TokenNode> findByParentToken(String parentToken);
 }

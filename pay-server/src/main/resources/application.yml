@@ -12,20 +12,21 @@ spring:
   profiles:
     active: local
   r2dbc:
-    url: postgresql://localhost/postgres
+    url: postgresql://localhost:5432/postgres
     username: postgres
     password: secret
-  jpa:
-    show-sql: true
-    generate-ddl: true
+  reactor:
+    debug-agent:
+      enabled: true
+
 
 logging:
   level:
     org:
       springframework:
         data:
-          r2dbc=DEBUG: debug
-
+          r2dbc:
+            DEBUG: debug
 ---
 
 spring:
