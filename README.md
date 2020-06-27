@@ -33,13 +33,6 @@ PayReceive 받기
 - 받기 Create - Response - 뿌리기 Complete 과 체결
 
 ---
-PayRoom 방
--
-
-- 방 안에 유저 기준으로 행위가 이루어짐. 
-
-- Room이 필요한가?
-
 
 - pay - manager
     -
