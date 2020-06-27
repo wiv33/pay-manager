@@ -59,18 +59,18 @@ class PayTokenTest extends PayCommonTest {
 //  @MethodSource("getTypePaySprinkle_1000")
   @ValueSource(ints = {10000})
   @DisplayName("토큰 중복 체크 - 10000개, loss = 5%...")
-  void testTokenKey(int expected) {
-    System.out.println("expected = " + expected);
-    int size = getTypePaySprinkle_param(expected)
+  void testTokenKey(int bounded) {
+    System.out.println("bounded = " + bounded);
+    int size = getTypePaySprinkle_param(bounded)
             .map(PayToken::getToken)
 //            .peek(System.out::println)
-            .limit(expected)
+            .limit(bounded)
             .collect(Collectors.toSet())
             .size();
-    int v = expected - (Math.floorDiv(expected, 100) * 5);
+    int v = bounded - (Math.floorDiv(bounded, 100) * 5);
     System.out.println("v = " + v + ", size = " + size);
     assertTrue(v < size);
-//    assertEquals(expected, size);
+//    assertEquals(bounded, size);
   }
 
   private static Stream<PayToken> getTypePaySprinkle_1000() {
