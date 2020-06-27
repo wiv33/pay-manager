@@ -27,7 +27,7 @@ class PayTokenTest {
   @ParameterizedTest
 //  @MethodSource("getTypePaySprinkle_1000")
   @ValueSource(ints = {10000})
-  @DisplayName("토큰 중복 체크 - 10000개, loss = 7%...")
+  @DisplayName("토큰 중복 체크 - 10000개, loss = 5%...")
   void testTokenKey(int expected) {
     System.out.println("expected = " + expected);
     int size = getTypePaySprinkle_param(expected)
@@ -36,7 +36,7 @@ class PayTokenTest {
             .limit(expected)
             .collect(Collectors.toSet())
             .size();
-    int v = expected - (Math.floorDiv(expected, 100) * 7);
+    int v = expected - (Math.floorDiv(expected, 100) * 5);
     System.out.println("v = " + v + ", size = " + size);
     assertTrue(v < size);
 //    assertEquals(expected, size);

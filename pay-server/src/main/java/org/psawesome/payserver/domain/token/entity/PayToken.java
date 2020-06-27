@@ -54,10 +54,12 @@ public class PayToken {
   public String makeToken() {
     return makeResult(
             getInts(48, 122)
+                    .parallel()
                     .filter(value -> (value > 48 && value < 58) ||
                             (value > 64 && value < 91) ||
-                            (value > 96 && value < 123))
-                    .parallel()
+                            (value > 96 && value < 123) ||
+                            value == 95 || value == 45
+                    )
                     .mapToObj(Character::toString)
 //                    .peek(System.out::println)
                     .collect(Collectors.toList()))
@@ -74,7 +76,7 @@ public class PayToken {
                     .collect(Collectors.toList())
     )
     ;
-    // TODO PayToken.findAll().count() > 1 ? makeToken() : currentToken
+    // TODO PayToken.findByParentTokenAll().count() > 1 ? makeToken() : currentToken
     return strings
             .parallelStream()
             .limit(3)
