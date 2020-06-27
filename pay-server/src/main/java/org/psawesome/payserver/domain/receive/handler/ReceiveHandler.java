@@ -35,42 +35,57 @@ public class ReceiveHandler {
     ServerRequest.Headers headers = request.headers();
     String xUserId = headers.firstHeader(X_USER_ID);
     String xRoomId = headers.firstHeader(X_ROOM_ID);
-    return ok().body(webClient.post()
-                    .uri("/token/node")
-                    .header(X_USER_ID, xUserId)
-                    .header(X_ROOM_ID, xRoomId)
-                    .bodyValue(NodeOneRequest.builder()
-                            .roomId(xUserId)
-                            .token(request.pathVariable("token"))
-                            .useYn("Y")
-                            .build()
-                    )
-                    .retrieve()
-                    .bodyToMono(TokenNode.class)
+    return ok().body(
+            retrieveTokenNode(request, xUserId, xRoomId)
                     .map(TokenNode::getId)
-                    .flatMap(tokenId -> webClient.get()
-                            .uri("/sprinkle/retrieve/{tokenId}", tokenId)
-                            .retrieve()
-                            .bodyToMono(RetrieveResponse.class)
-                    )
-                    .flatMap(id -> receiveRepository.save(
-                            PayReceive.builder()
-                                    .divide(id.getDivide())
-                                    .receivePrice(id.getResultPrice())
-                                    .receiveUser(parseNumber(xUserId, Integer.class))
-                                    .sprinkleDate(id.getStartDate())
-                                    .roomName(xRoomId)
-                                    .tokenId(id.getTokenId())
-                                    .build()
-                    ))
+                    .flatMap(this::retrieveSprinkle)
+                    .flatMap(id -> saveReceive(xUserId, xRoomId, id))
                     .log("payReceive log -->>> ")
-                    .map(payReceive -> ReceiveInfo.builder()
-                            .price(payReceive.getReceivePrice())
-                            .build())
+                    .map(this::makeResponse)
                     .log()
                     .doOnError(throwable -> ServerResponse.notFound()),
             ReceiveInfo.class)
             .doOnError(throwable -> ServerResponse.notFound())
             ;
+  }
+
+  private ReceiveInfo makeResponse(PayReceive payReceive) {
+    return ReceiveInfo.builder()
+            .price(payReceive.getReceivePrice())
+            .build();
+  }
+
+  private Mono<PayReceive> saveReceive(String xUserId, String xRoomId, RetrieveResponse id) {
+    return receiveRepository.save(
+            PayReceive.builder()
+                    .divide(id.getDivide())
+                    .receivePrice(id.getResultPrice())
+                    .receiveUser(parseNumber(xUserId, Integer.class))
+                    .sprinkleDate(id.getStartDate())
+                    .roomName(xRoomId)
+                    .tokenId(id.getTokenId())
+                    .build()
+    );
+  }
+
+  private Mono<TokenNode> retrieveTokenNode(ServerRequest request, String xUserId, String xRoomId) {
+    return webClient.post()
+            .uri("/token/node")
+            .header(X_USER_ID, xUserId)
+            .header(X_ROOM_ID, xRoomId)
+            .bodyValue(NodeOneRequest.builder()
+                    .roomId(xUserId)
+                    .token(request.pathVariable("token"))
+                    .useYn("Y")
+                    .build())
+            .retrieve()
+            .bodyToMono(TokenNode.class);
+  }
+
+  private Mono<RetrieveResponse> retrieveSprinkle(Integer tokenId) {
+    return webClient.get()
+            .uri("/sprinkle/retrieve/{tokenId}", tokenId)
+            .retrieve()
+            .bodyToMono(RetrieveResponse.class);
   }
 }
