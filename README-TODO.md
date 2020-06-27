@@ -7,6 +7,8 @@ spec 내용
 -
 - pay-manager:**pay-server**
     - [모듈 경로](https://github.com/wiv33/pay-manager/tree/master/pay-server)
+    
+- ~~pay-manager:pay-server~~
  
 도메인    
 -
