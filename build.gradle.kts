@@ -20,6 +20,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven(url = "https://repo.spring.io/milestone")
 }
 
 /*
@@ -52,4 +53,16 @@ subprojects {
         }
     }
 */
+}
+project(":pay-server") {
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
+
+    repositories() {
+        mavenCentral()
+    }
+}
+
+project(":pay-client") {
+
 }
