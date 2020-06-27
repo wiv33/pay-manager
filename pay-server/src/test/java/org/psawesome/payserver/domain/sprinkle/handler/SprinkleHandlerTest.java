@@ -85,4 +85,10 @@ class SprinkleHandlerTest extends PayCommonTest {
               ;
             });
   }
+
+  @Test
+  @DisplayName(":뿌린 사람의 방, findAll")
+  void testRetrieveAll() {
+
+  }
 }

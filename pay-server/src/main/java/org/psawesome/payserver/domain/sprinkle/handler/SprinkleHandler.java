@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -70,5 +71,14 @@ public class SprinkleHandler {
             this.sprinkleRepository.findById(parseNumber(request.pathVariable("tokenId"), Integer.class)),
             PaySprinkle.class)
             .log("SprinkleHandler.retrieve --> ");
+  }
+
+  public Mono<ServerResponse> retrieveAll(ServerRequest request) {
+    return ok().body(
+            this.sprinkleRepository.findAll()
+            .elementAt(0)
+            .thenEmpty(s -> ServerResponse.notFound()),
+            PaySprinkle.class)
+            ;
   }
 }

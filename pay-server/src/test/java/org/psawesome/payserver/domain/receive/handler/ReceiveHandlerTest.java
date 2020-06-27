@@ -31,8 +31,11 @@ class ReceiveHandlerTest extends PayCommonTest {
     assertNotNull(receiveRepository);
   }
 
+  /**
+   * @see org.psawesome.payserver.domain.sprinkle.handler.SprinkleHandlerTest
+   */
   @Test
-  @DisplayName("자신 방에 있는 뿌리기를 아무거나 찾아서 receive")
+  @DisplayName("자신 방에 있는 뿌리기를 (추출: 아무거나 - ) 찾아서 receive")
   void testFindFirstTokenReceive() {
     testClient.get()
             .uri("/receive/{token}", "LN5")
@@ -44,7 +47,6 @@ class ReceiveHandlerTest extends PayCommonTest {
             .consumeWith(tokenNodeEntityExchangeResult -> {
               // TODO assert 추가
 
-              System.out.println(tokenNodeEntityExchangeResult.getStatus().toString());
             })
     ;
   }
