@@ -20,6 +20,7 @@ public class WebClientConfig {
   WebClient webClient() {
     return WebClient.builder()
             .codecs(ClientCodecConfigurer::defaultCodecs)
+            .baseUrl("http://localhost:8080")
             .build();
   }
 }

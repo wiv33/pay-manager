@@ -1,0 +1,4 @@
+GET http://localhost:8080/receive/DO6
+Content-Type: application/json
+X-ROOM-ID:Mono
+X-USER-ID:3

@@ -9,15 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.server.RouterFunction;
 
-import java.util.Collections;
-
-import static org.psawesome.payserver.domain.common.PayUtils.X_ROOM_ID;
-import static org.psawesome.payserver.domain.common.PayUtils.X_USER_ID;
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.nest;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
@@ -46,12 +40,13 @@ public class PayRouterFunction {
     )
             .andNest(path("/receive"),
                     nest(accept(MediaType.APPLICATION_JSON),
-                            route(GET("/{id}"), receiveHandler::takePay)
+                            route(GET("/{token}"), receiveHandler::takePay)
                     ))
             .andNest(path("/token"),
                     nest(accept(MediaType.APPLICATION_JSON),
-                            route(GET("/{divide}"), tokenHandler::getToken)
+                            route(GET("/{divide}"), tokenHandler::generateToken)
                             .andRoute(GET("/node/{tokenId}"), tokenHandler::getNodes)
+                            .andRoute(POST("/node"), tokenHandler::getNodeOneByToken)
                     )
             )
             ;

@@ -44,7 +44,7 @@ public class SprinkleHandler {
 
   private Mono<PayToken> generateToken(ServerRequest request, String xUserId, String xRoomId) {
     return webClient.get()
-            .uri("http://localhost:8080/token/{divide}", request.pathVariable("divide"))
+            .uri("/token/{divide}", request.pathVariable("divide"))
             .header(X_USER_ID, xUserId)
             .header(X_ROOM_ID, xRoomId)
             .retrieve()

@@ -12,6 +12,10 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
  */
 @SpringBootTest
 public class PayCommonTest {
+
+  public final String X_USER_ID = "X-USER-ID";
+  public final String X_ROOM_ID = "X-ROOM-ID";
+
   @Autowired
   ExchangeFilterFunction exchangeFilterFunction;
 
