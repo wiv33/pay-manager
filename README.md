@@ -1,3 +1,6 @@
+waiting - after wiv33/rsocket-mongo-vue.git
+=
+
 # 페이 뿌리기 기능
 
 ## 페이를 뿌리는 유저, 뿌린 페이를 얻을 수 있는 유저
