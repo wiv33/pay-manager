@@ -3,7 +3,7 @@ spec 내용
 * webflux
 * docker-compose: r2dbc - postgres
 
-핵심 듈
+로직 구현된 모듈
 -
 - pay-manager:**pay-server**
  
