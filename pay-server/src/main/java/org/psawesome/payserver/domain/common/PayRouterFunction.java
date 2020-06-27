@@ -36,7 +36,8 @@ public class PayRouterFunction {
   public RouterFunction<?> routerFunction() {
     return nest(path("/sprinkle"),
             nest(accept(MediaType.APPLICATION_JSON),
-                    route(GET("/{price}/{divide}"), sprinkleHandler::sprinklePay))
+                    route(GET("/create/{price}/{divide}"), sprinkleHandler::sprinklePay))
+            .andRoute(GET("/retrieve/{tokenId}"), sprinkleHandler::retrieve)
     )
             .andNest(path("/receive"),
                     nest(accept(MediaType.APPLICATION_JSON),
@@ -46,6 +47,7 @@ public class PayRouterFunction {
                     nest(accept(MediaType.APPLICATION_JSON),
                             route(GET("/{divide}"), tokenHandler::generateToken)
                             .andRoute(GET("/node/{tokenId}"), tokenHandler::getNodes)
+                            .andRoute(GET("/all"), tokenHandler::retrieveAll)
                             .andRoute(POST("/node"), tokenHandler::getNodeOneByToken)
                     )
             )

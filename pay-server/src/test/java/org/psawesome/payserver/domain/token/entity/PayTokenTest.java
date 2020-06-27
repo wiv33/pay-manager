@@ -1,9 +1,15 @@
 package org.psawesome.payserver.domain.token.entity;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.psawesome.payserver.domain.common.PayCommonTest;
+import org.psawesome.payserver.domain.token.repo.PayTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import reactor.core.publisher.Mono;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,7 +21,32 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * author: ps [https://github.com/wiv33/pay-manager]
  * DATE: 20. 6. 26. Friday
  */
-class PayTokenTest {
+class PayTokenTest extends PayCommonTest {
+
+  @Autowired
+  PayTokenRepository payTokenRepository;
+
+  @Test
+  void testPayTokenAll() {
+    payTokenRepository.findAll()
+            .map(PayToken::getToken)
+            .log()
+            .subscribe(System.out::println);
+  }
+
+  @Test
+  void testPrintToken() {
+    testClient.get()
+            .uri("/token/all")
+            .header(X_ROOM_ID, "2")
+            .header(X_USER_ID, "2")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectBody(PayToken.class)
+            .consumeWith(payTokenEntityExchangeResult -> {
+              System.out.println(payTokenEntityExchangeResult.getResponseBody().getToken());
+            });
+  }
 
   @ParameterizedTest
   @MethodSource({"getTypePaySprinkle_1000"})

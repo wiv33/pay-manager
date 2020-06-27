@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.psawesome.payserver.domain.common.PayUtils.X_ROOM_ID;
@@ -36,9 +37,9 @@ public class SprinkleHandler {
             .header(X_USER_ID, xUserId)
             .header(X_ROOM_ID, xRoomId)
             .body(generateToken(request, xUserId, xRoomId)
-                    .map(PayToken::getId)
-                    .flatMap(id -> saveSprinkle(request, xUserId, xRoomId, id)),
-            PaySprinkle.class)
+                            .map(PayToken::getId)
+                            .flatMap(id -> saveSprinkle(request, xUserId, xRoomId, id)),
+                    PaySprinkle.class)
             .log();
   }
 
@@ -60,7 +61,14 @@ public class SprinkleHandler {
                     .sprinkleUser(parseNumber(xUserId, Integer.class))
                     .sprinklePrice(parseNumber(request.pathVariable("price"), Integer.class))
                     .divide(parseNumber(request.pathVariable("divide"), Integer.class))
+                    .startDate(LocalDateTime.now().toString())
                     .build());
   }
 
+  public Mono<ServerResponse> retrieve(ServerRequest request) {
+    return ok().body(
+            this.sprinkleRepository.findById(parseNumber(request.pathVariable("tokenId"), Integer.class)),
+            PaySprinkle.class)
+            .log("SprinkleHandler.retrieve --> ");
+  }
 }

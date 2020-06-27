@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.psawesome.payserver.domain.common.PayCommonTest;
 import org.psawesome.payserver.domain.receive.dto.res.TokenNode;
 import org.psawesome.payserver.domain.receive.repo.ReceiveRepository;
+import org.psawesome.payserver.domain.token.entity.PayToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -34,7 +35,7 @@ class ReceiveHandlerTest extends PayCommonTest {
   @DisplayName("자신 방에 있는 뿌리기를 아무거나 찾아서 receive")
   void testFindFirstTokenReceive() {
     testClient.get()
-            .uri("/receive/{token}", "MeA")
+            .uri("/receive/{token}", "LN5")
             .header(X_USER_ID, "2")
             .header(X_ROOM_ID, "Mono")
             .accept(MediaType.APPLICATION_JSON)

@@ -30,7 +30,7 @@ class SprinkleHandlerTest extends PayCommonTest {
   @DisplayName("토큰 생성 테스트")
   void testSprinkleCreate() {
     testClient.get()
-            .uri("/sprinkle/{price}/{divide}", 4000, 3)
+            .uri("/create/sprinkle/{price}/{divide}", 4000, 3)
             .header(X_USER_ID, "1")
             .header(X_ROOM_ID, "flux")
             .accept(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ class SprinkleHandlerTest extends PayCommonTest {
   @ValueSource(ints = {3, 4, 5, 6, 7})
   void testExistToken(int divide) {
     testClient.get()
-            .uri("/sprinkle/{price}/{divide}", 7000, divide)
+            .uri("/sprinkle/create/{price}/{divide}", 7000, divide)
             .header(X_USER_ID, "1")
             .header(X_ROOM_ID, "Mono")
             .exchange()
