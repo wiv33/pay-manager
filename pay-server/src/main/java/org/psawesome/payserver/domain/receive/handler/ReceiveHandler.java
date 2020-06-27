@@ -1,5 +1,6 @@
 package org.psawesome.payserver.domain.receive.handler;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -10,6 +11,7 @@ import reactor.core.publisher.Mono;
  * DATE: 20. 6. 26. Friday
  */
 @Component
+@RequiredArgsConstructor
 public class ReceiveHandler {
   public <T extends ServerResponse> Mono<T> takePay(ServerRequest request) {
     return null;

@@ -26,15 +26,19 @@ class PayTokenTest {
 
   @ParameterizedTest
 //  @MethodSource("getTypePaySprinkle_1000")
-  @ValueSource(ints = {1000})
-  @DisplayName("토큰 중복 체크 - 1000개, loss = 2%...")
+  @ValueSource(ints = {10000})
+  @DisplayName("토큰 중복 체크 - 10000개, loss = 7%...")
   void testTokenKey(int expected) {
-    int size = getTypePaySprinkle_1000()
+    System.out.println("expected = " + expected);
+    int size = getTypePaySprinkle_param(expected)
             .map(PayToken::getToken)
+//            .peek(System.out::println)
             .limit(expected)
             .collect(Collectors.toSet())
             .size();
-    assertTrue(expected * 0.02 < size);
+    int v = expected - (Math.floorDiv(expected, 100) * 7);
+    System.out.println("v = " + v + ", size = " + size);
+    assertTrue(v < size);
 //    assertEquals(expected, size);
   }
 
@@ -42,5 +46,11 @@ class PayTokenTest {
     return Stream.generate(() -> PayToken.builder()
             .build())
             .limit(1000);
+  }
+
+  private static Stream<PayToken> getTypePaySprinkle_param(int limit) {
+    return Stream.generate(() -> PayToken.builder()
+            .build())
+            .limit(limit);
   }
 }

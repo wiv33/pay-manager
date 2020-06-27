@@ -53,10 +53,10 @@ public class PayToken {
 
   public String makeToken() {
     return makeResult(
-            IntStream.concat(
-                    getInts(65, 97),
-                    getInts(97, 122)
-            )
+            getInts(48, 122)
+                    .filter(value -> (value > 48 && value < 58) ||
+                            (value > 64 && value < 91) ||
+                            (value > 96 && value < 123))
                     .parallel()
                     .mapToObj(Character::toString)
 //                    .peek(System.out::println)
@@ -67,9 +67,10 @@ public class PayToken {
   private String makeResult(List<String> strings) {
     strings.addAll(
             ThreadLocalRandom.current().ints(0, 9)
-                    .limit(7)
+                    .limit(3)
                     .parallel()
                     .mapToObj(String::valueOf)
+//                    .peek(System.out::println)
                     .collect(Collectors.toList())
     )
     ;
@@ -83,7 +84,7 @@ public class PayToken {
 
   private IntStream getInts(int i, int i2) {
     return ThreadLocalRandom.current().ints(i, i2)
-            .limit(12);
+            .limit(3);
   }
 
 }

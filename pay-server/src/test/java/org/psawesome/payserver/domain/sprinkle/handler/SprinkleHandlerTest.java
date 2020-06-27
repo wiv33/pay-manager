@@ -3,6 +3,7 @@ package org.psawesome.payserver.domain.sprinkle.handler;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.psawesome.payserver.domain.common.PayCommonTest;
 import org.psawesome.payserver.domain.sprinkle.entity.PaySprinkle;
 import org.psawesome.payserver.domain.token.entity.TokenNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +26,7 @@ import static org.psawesome.payserver.domain.common.PayUtils.X_USER_ID;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class SprinkleHandlerTest {
-
-  WebTestClient testClient;
-
-  @Autowired
-  ExchangeFilterFunction exchangeFilterFunction;
-
-  @BeforeEach
-  void setUp() {
-    testClient = WebTestClient
-            .bindToServer()
-            .filter(exchangeFilterFunction)
-            .baseUrl("http://localhost:8080")
-            .build();
-  }
+class SprinkleHandlerTest extends PayCommonTest {
 
   @Order(1)
   @Test
@@ -96,6 +83,7 @@ class SprinkleHandlerTest {
                       .expectBody(TokenNode.class)
                       .consumeWith(tokenNodeEntityExchangeResult -> {
                         assertNotNull(tokenNodeEntityExchangeResult.getResponseBody());
+                        System.out.println(tokenNodeEntityExchangeResult.getResponseBody().getId());
                       })
               ;
             });
