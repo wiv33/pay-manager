@@ -1,7 +1,6 @@
 package org.psawesome.payserver.domain.token.handler;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.psawesome.payserver.domain.token.dto.req.NodeOneRequest;
 import org.psawesome.payserver.domain.token.entity.PayToken;
 import org.psawesome.payserver.domain.token.entity.TokenNode;
@@ -28,7 +27,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
  * author: ps [https://github.com/wiv33/pay-manager]
  * DATE: 20. 6. 26. Friday
  */
-@Slf4j
+//@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TokenHandler {
@@ -47,16 +46,21 @@ public class TokenHandler {
   @Description("")
   public Mono<ServerResponse> getNodes(ServerRequest request) {
     Integer tokenId = parseNumber(request.pathVariable("tokenId"), Integer.class);
-    log.info("getNodes tokenId = {}", tokenId);
+//    log.info("getNodes tokenId = {}", tokenId);
     return ok().body(
-            payTokenRepository.findById(tokenId)
-                    .map(PayToken::getToken)
-//                    .log("PayToken::getToken")
-                    .map(tokenNodeRepository::findByParentToken)
-                    .log("tokenNodeRepository::findByParentToken")
-                    .flatMap(Mono::from)
-            , TokenNode.class)
+            retrieveToken(tokenId)
+            .log(),
+            TokenNode.class)
             .log("getNodes final log ==> ");
+  }
+
+  private Mono<TokenNode> retrieveToken(Integer tokenId) {
+    return payTokenRepository.findById(tokenId)
+            .map(PayToken::getToken)
+//                    .log("PayToken::getToken")
+            .map(tokenNodeRepository::findByParentToken)
+            .log("tokenNodeRepository::findByParentToken")
+            .flatMap(Mono::from);
   }
 
   @Description("")
